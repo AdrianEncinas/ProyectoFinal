@@ -11,8 +11,9 @@ import javax.swing.ImageIcon;
 
 public class Pantalla1_1 {
 
-	private JFrame frame;
+	static JFrame frame;
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -44,6 +45,9 @@ public class Pantalla1_1 {
 		frame.setBounds(100, 100, 451, 229);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
+	    frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+	    frame.setVisible(true);
 		
 		JLabel lblNewLabel = new JLabel("Administraci\u00F3n");
 		lblNewLabel.setFont(new Font("Haettenschweiler", Font.PLAIN, 20));
@@ -51,27 +55,41 @@ public class Pantalla1_1 {
 		lblNewLabel.setBounds(164, 21, 110, 23);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("Productos");
-		btnNewButton.setFont(new Font("Haettenschweiler", Font.PLAIN, 16));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton botonProducto = new JButton("Productos");
+		botonProducto.setFont(new Font("Haettenschweiler", Font.PLAIN, 16));
+		botonProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Pantalla1_1_2 pantallaProducto = new Pantalla1_1_2();
+				pantallaProducto.frame.setVisible(true);
+				Pantalla1_1.frame.setVisible(false);
 			}
 		});
-		btnNewButton.setBounds(249, 65, 175, 91);
-		frame.getContentPane().add(btnNewButton);
+		botonProducto.setBounds(249, 65, 175, 91);
+		frame.getContentPane().add(botonProducto);
 		
-		JButton btnNewButton_1 = new JButton("Categoria");
-		btnNewButton_1.setFont(new Font("Haettenschweiler", Font.PLAIN, 16));
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton botonCategoria = new JButton("Categoria");
+		botonCategoria.setFont(new Font("Haettenschweiler", Font.PLAIN, 16));
+		botonCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Pantalla1_1_1 pantallaCategoria = new Pantalla1_1_1();
+				pantallaCategoria.frame.setVisible(true);
+				Pantalla1_1.frame.setVisible(false);
 			}
 		});
-		btnNewButton_1.setBounds(10, 65, 175, 91);
-		frame.getContentPane().add(btnNewButton_1);
+		botonCategoria.setBounds(10, 65, 175, 91);
+		frame.getContentPane().add(botonCategoria);
 		
-		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\arrow_left.png"));
-		button.setBounds(10, 11, 50, 44);
-		frame.getContentPane().add(button);
+		JButton botonAtras = new JButton("");
+		botonAtras.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\arrow_left.png"));
+		botonAtras.setBounds(10, 11, 50, 44);
+		frame.getContentPane().add(botonAtras);
+		
+		botonAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Pantalla1 pantallaPrincipal = new Pantalla1();
+				pantallaPrincipal.frame.setVisible(true);
+				Pantalla1_1.frame.setVisible(false);
+			}
+		});
 	}
 }

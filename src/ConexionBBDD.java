@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,16 +15,17 @@ public class ConexionBBDD {
 	private String url= "jdbc:oracle:thin:@localhost:1521:XE";
 	private String usr = "LORCA";
 	private String pwd = "lorca";
-	private Connection conexion;
+	private Connection cn;
+	private Statement st;
 	
 
 	public ConexionBBDD()  {
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conexion = DriverManager.getConnection(url, usr, pwd);
+			cn = DriverManager.getConnection(url, usr, pwd);
 			
-			if(!conexion.isClosed()) {
+			if(!cn.isClosed()) {
 				System.out.println("Conexión establecida");
 			}
 			else
@@ -39,12 +41,12 @@ public class ConexionBBDD {
 	
 	public DefaultTableModel ConsultaTablaCategoria() {
 		String [] columnas={"ID_CATEGORIA","NOMBRE"};
-		String [] registro=new String[2];
+		String [] registro=new String[9];
 		DefaultTableModel ModeloTabla = new DefaultTableModel(null,columnas);
-		String query = "SELECT * FROM LORCA.CATEGORIA";
+		String query = "SELECT * FROM LORCA.CATEGORIA order by ID_CATEGORIA asc";
 		 
 		try {
-			Statement stmt = conexion.createStatement();
+			Statement stmt = cn.createStatement();
 			ResultSet rset = stmt.executeQuery(query);
 			while(rset.next()) {
 				 registro[0]=rset.getString("ID_CATEGORIA");
@@ -62,6 +64,33 @@ public class ConexionBBDD {
 		
 	}
 	
-	
+	public int InsertarCategoria(){
+		
+		int resultado=0;
+		String query = "INSERT INTO LORCA.CATEGORIA VALUES("+Pantalla1_1_1.Id+" , '"+Pantalla1_1_1.Nombre+"')";
+		 
+		try {
+			Statement stmt = cn.createStatement();
+			resultado = stmt.executeUpdate(query);
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		return resultado;	
+	}
 
+	public int borrarCategoria() {
+		int resultado=0;
+		String query = "DELETE FROM LORCA.CATEGORIA WHERE ID_CATEGORIA="+Pantalla1_1_1.Id+" AND NOMBRE='"+Pantalla1_1_1.Nombre+"'";
+		try {
+			Statement stmt = cn.createStatement();
+			resultado = stmt.executeUpdate(query);
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		return resultado;
+	}
 }

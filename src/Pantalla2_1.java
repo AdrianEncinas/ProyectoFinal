@@ -5,10 +5,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Pantalla2_1 {
 
-	private JFrame frame;
+	static JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -55,6 +57,16 @@ public class Pantalla2_1 {
 		lblBar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBar.setBounds(155, 11, 59, 23);
 		frame.getContentPane().add(lblBar);
+		
+		JButton botonAtras = new JButton("");
+		botonAtras.setBounds(10, 11, 50, 44);
+		frame.getContentPane().add(botonAtras);
+		botonAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Pantalla1 pantallaPrincipal = new Pantalla1();
+				pantallaPrincipal.frame.setVisible(true);
+				Pantalla2_1.frame.setVisible(false);
+			}
+		});
 	}
-
 }
