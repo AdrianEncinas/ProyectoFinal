@@ -63,11 +63,37 @@ public class ConexionBBDD {
 		return ModeloTabla;
 		
 	}
+	public DefaultTableModel ConsultaTablaProductos() {
+		String [] columnas={"ID","ID_CATEGORIA","NOMBRE","PRECIO"};
+		String [] registro=new String[5];
+		DefaultTableModel ModeloTabla = new DefaultTableModel(null,columnas);
+		String query = "SELECT * FROM LORCA.PRODUCTO order by ID_PRODUCTO asc";
+		 
+		try {
+			Statement stmt = cn.createStatement();
+			ResultSet rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				 registro[0]=rset.getString("ID_PRODUCTO");
+		         registro[1]=rset.getString("ID_CATEGORIA");
+		         registro[2]=rset.getString("NOMBRE");
+		         registro[3]=rset.getString("PRECIO");
+		         ModeloTabla.addRow(registro);
+			}
+			rset.close();
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		
+		return ModeloTabla;
+		
+	}
 	
-	public int InsertarCategoria(){
+	public int InsertarProducto(){
 		
 		int resultado=0;
-		String query = "INSERT INTO LORCA.CATEGORIA VALUES("+Pantalla1_1_1.Id+" , '"+Pantalla1_1_1.Nombre+"')";
+		String query = "INSERT INTO LORCA.PRODUCTO VALUES("+Pantalla1_1_2.IdProducto+" , "+Pantalla1_1_2.IdCategoria+" , '"+Pantalla1_1_2.Nombre+"' , "+Pantalla1_1_2.precio+" )";
 		 
 		try {
 			Statement stmt = cn.createStatement();
@@ -78,6 +104,57 @@ public class ConexionBBDD {
 			s.printStackTrace();
 		}
 		return resultado;	
+	}
+	
+	public int InsertarCategoria(){
+		
+		int resultado=0;
+		String query = "INSERT INTO LORCA.CATEGORIA VALUES("+Pantalla1_1_1.Id+" , '"+Pantalla1_1_1.Nombre+"')";
+		System.out.println(query);
+		
+		try {
+			Statement stmt = cn.createStatement();
+			resultado = stmt.executeUpdate(query);
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		return resultado;	
+	}
+	
+	public int ModificarCategoria() {
+		
+		int resultado = 0;
+		String query = "UPDATE LORCA.CATEGORIA set ID_CATEGORIA="+Pantalla1_1_1.Id+", NOMBRE='"+Pantalla1_1_1.Nombre+"' where ID_CATEGORIA="+Pantalla1_1_1.Id+"";
+		System.out.println(query);
+		
+		try {
+			Statement stmt = cn.createStatement();
+			resultado = stmt.executeUpdate(query);
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		return resultado;
+	}
+	
+public int ModificarProducto() {
+		
+		int resultado = 0;
+		String query = "UPDATE LORCA.producto set ID_PRODUCTO="+Pantalla1_1_2.IdProducto+" , ID_CATEGORIA="+Pantalla1_1_2.IdCategoria+" , NOMBRE='"+Pantalla1_1_2.Nombre+"' , PRECIO="+Pantalla1_1_2.precio+" where id_producto="+Pantalla1_1_2.IdProducto+"";
+		System.out.println(query);
+		
+		try {
+			Statement stmt = cn.createStatement();
+			resultado = stmt.executeUpdate(query);
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		return resultado;
 	}
 
 	public int borrarCategoria() {
@@ -93,4 +170,19 @@ public class ConexionBBDD {
 		}
 		return resultado;
 	}
-}
+	
+	public int borrarProducto() {
+		int resultado=0;
+		String query = "DELETE FROM LORCA.PRODUCTO WHERE ID_PRODUCTO="+Pantalla1_1_2.IdProducto+" and ID_CATEGORIA="+Pantalla1_1_2.IdCategoria+" AND NOMBRE='"+Pantalla1_1_2.Nombre+"' and PRECIO="+Pantalla1_1_2.precio+"";
+		System.out.println(query);
+		try {
+			Statement stmt = cn.createStatement();
+			resultado = stmt.executeUpdate(query);
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		return resultado;
+	}
+} 
